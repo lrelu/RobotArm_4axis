@@ -1,4 +1,4 @@
-# Project Title
+﻿# Project Title
 
 [가제]4Axis Robot Arm
 
@@ -8,8 +8,8 @@
 
 ## References
 
-* [Ref](https://www.youtube.com/watch?v=bLnAJ-mSElE) - Robot Arm Youtube
-* [Ref](https://www.youtube.com/watch?v=asLhd54LM3A) - Robot control with PLC S7 1200 and SCADA
+* [Link](https://www.youtube.com/watch?v=bLnAJ-mSElE) - Robot Arm Youtube
+* [Link](https://www.youtube.com/watch?v=asLhd54LM3A) - Robot control with PLC S7 1200 and SCADA
 
 ## Keywords
 
