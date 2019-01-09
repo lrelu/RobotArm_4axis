@@ -4,13 +4,14 @@
 const bool isDebug = true;
 // 딜레이 속도
 const int delaySpeed = 100;
-const int runSpeed = 500;
+const int runSpeed = 2000;
 // 자동실행모드
 volatile bool isAutoRun = false;
 // 가변저항
 volatile int vr1, vr2, vr3, vr4;     // A0, A1, A2, A3
 // 서버모터 객체
 Servo sv1, sv2, sv3, sv4;   //5번핀, 6번핀, 10번핀, 11번핀
+Servo sv;
 // 모터로 출력값
 volatile int mv1, mv2, mv3, mv4;     //가변저항값(0-1023)값을 0-180으로 변경
 // 버튼 값
@@ -64,12 +65,13 @@ void loop() {
     
     // 서보모터 출력
     writeServo(mv1, mv2, mv3, mv4);
+    
+    // 속도처리
+    delay(delaySpeed);
   }
 
   // 상태확인
   turnOnOffLED();
-  // 속도처리
-  delay(delaySpeed);
 }
 
 // 자동실행 버튼 클릭
@@ -104,6 +106,7 @@ void run_motion(){
     vr2 = motion[i][1];
     vr3 = motion[i][2];
     vr4 = motion[i][3];
+    
     writeServo(vr1, vr2, vr3, vr4);
     delay(runSpeed);
   }
@@ -148,6 +151,12 @@ void scaleVR(){
 //서보모터 출력
 void writeServo(int v1, int v2, int v3, int v4){
   sv1.write(v1); sv2.write(v2); sv3.write(v3); sv4.write(v4);
+  if (isDebug){
+    Serial.print(vr1); Serial.print(" / ");
+    Serial.print(vr2); Serial.print(" / ");
+    Serial.print(vr3); Serial.print(" / ");
+    Serial.print(vr4); Serial.println(" / ");
+  }
 }
 
 // 가변저항 읽기
