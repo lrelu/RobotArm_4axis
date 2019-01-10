@@ -51,7 +51,7 @@ void loop() {
     state = HIGH;
     
     // 모션 실행
-    run_motion();
+    //run_motion();
   }else{
     //학습모드 LED 상태 (깜박깜박)
     state = !state;
@@ -101,14 +101,17 @@ void learn_clicked(){
 
 // 모션에 저장된 위치값 실행 (순간순간 딜레이 속도 delaySpeed)
 void run_motion(){
-  for (int i = 0; i < motion_index; i++){
-    vr1 = motion[i][0];
-    vr2 = motion[i][1];
-    vr3 = motion[i][2];
-    vr4 = motion[i][3];
-    
-    writeServo(vr1, vr2, vr3, vr4);
-    delay(runSpeed);
+  //자동 실행 모드일 경우
+  while(isAutoRun){
+    for (int i = 0; i < motion_index; i++){
+      vr1 = motion[i][0];
+      vr2 = motion[i][1];
+      vr3 = motion[i][2];
+      vr4 = motion[i][3];
+      
+      writeServo(vr1, vr2, vr3, vr4);
+      delay(runSpeed);
+    }
   }
 }
 
@@ -151,12 +154,6 @@ void scaleVR(){
 //서보모터 출력
 void writeServo(int v1, int v2, int v3, int v4){
   sv1.write(v1); sv2.write(v2); sv3.write(v3); sv4.write(v4);
-  if (isDebug){
-    Serial.print(vr1); Serial.print(" / ");
-    Serial.print(vr2); Serial.print(" / ");
-    Serial.print(vr3); Serial.print(" / ");
-    Serial.print(vr4); Serial.println(" / ");
-  }
 }
 
 // 가변저항 읽기
