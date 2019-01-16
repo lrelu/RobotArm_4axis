@@ -129,6 +129,8 @@ void Record_Button_Chk(){
       pos_arr[2][pos_num] = s3_angle;
       pos_arr[3][pos_num] = s4_angle;
       pos_num++;
+      Serial.print("pos_num = ");
+      Serial.println(pos_num);
     }
   }
 }
@@ -150,6 +152,9 @@ void Run_Button_Chk()
         servo2.write(s2_angle);
         servo3.write(s3_angle);
         servo4.write(s4_angle);
+        
+        Serial.print("stop , num = ");
+        Serial.println(pos_num);
       }
       
       else
@@ -169,8 +174,16 @@ void Run_Button_Chk()
             EEPROM.write((i*4) + 3, pos_arr[2][i]);
             EEPROM.write((i*4) + 4, pos_arr[3][i]);
           }
-          
+         Serial.print("start , num = ");
+         Serial.println(pos_num);
         }
+        
+        else
+        {
+         Serial.print("not start , num = ");
+         Serial.println(pos_num);
+        }
+        
       }
     }
 }
