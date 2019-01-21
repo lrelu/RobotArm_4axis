@@ -4,13 +4,14 @@
 const bool isDebug = true;
 // 딜레이 속도
 const int delaySpeed = 100;
-const int runSpeed = 500;
+const int runSpeed = 2000;
 // 자동실행모드
 volatile bool isAutoRun = false;
 // 가변저항
 volatile int vr1, vr2, vr3, vr4;     // A0, A1, A2, A3
 // 서버모터 객체
 Servo sv1, sv2, sv3, sv4;   //5번핀, 6번핀, 10번핀, 11번핀
+Servo sv;
 // 모터로 출력값
 volatile int mv1, mv2, mv3, mv4;     //가변저항값(0-1023)값을 0-180으로 변경
 // 버튼 값
@@ -50,7 +51,7 @@ void loop() {
     state = HIGH;
     
     // 모션 실행
-    run_motion();
+    //run_motion();
   }else{
     //학습모드 LED 상태 (깜박깜박)
     state = !state;
@@ -64,12 +65,13 @@ void loop() {
     
     // 서보모터 출력
     writeServo(mv1, mv2, mv3, mv4);
+    
+    // 속도처리
+    delay(delaySpeed);
   }
 
   // 상태확인
   turnOnOffLED();
-  // 속도처리
-  delay(delaySpeed);
 }
 
 // 자동실행 버튼 클릭
@@ -99,13 +101,17 @@ void learn_clicked(){
 
 // 모션에 저장된 위치값 실행 (순간순간 딜레이 속도 delaySpeed)
 void run_motion(){
-  for (int i = 0; i < motion_index; i++){
-    vr1 = motion[i][0];
-    vr2 = motion[i][1];
-    vr3 = motion[i][2];
-    vr4 = motion[i][3];
-    writeServo(vr1, vr2, vr3, vr4);
-    delay(runSpeed);
+  //자동 실행 모드일 경우
+  while(isAutoRun){
+    for (int i = 0; i < motion_index; i++){
+      vr1 = motion[i][0];
+      vr2 = motion[i][1];
+      vr3 = motion[i][2];
+      vr4 = motion[i][3];
+      
+      writeServo(vr1, vr2, vr3, vr4);
+      delay(runSpeed);
+    }
   }
 }
 
